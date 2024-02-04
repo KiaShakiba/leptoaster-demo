@@ -17,12 +17,12 @@ group: "pages"
 cancel-in-progress: false
 
 jobs:
-Github-Pages-Release:
+  Github-Pages-Release:
     timeout-minutes: 10
 
     environment:
-    name: github-pages
-    url: ${{ steps.deployment.outputs.page_url }}
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     runs-on: ubuntu-latest
 
@@ -52,14 +52,14 @@ Github-Pages-Release:
       - name: Setup Pages
         uses: actions/configure-pages@v4
         with:
-        enablement: true
-        # token:
+          enablement: true
+          # token:
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-        # Upload dist dir
-        path: './dist'
+          # Upload dist dir
+          path: './dist'
 
       - name: Deploy to GitHub Pages 🚀
         id: deployment
