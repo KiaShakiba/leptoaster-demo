@@ -7,4 +7,4 @@ edition = "2021"
 
 [dependencies]
 leptos = { version = "0.6.5", features = ["csr", "nightly"] }
-leptoaster = { version = "0.1.0" }
+leptoaster = { version = "0.1.2" }

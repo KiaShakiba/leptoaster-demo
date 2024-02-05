@@ -43,7 +43,8 @@ pub fn ToastConfig() -> impl IntoView {
 
 	view! {
 		<div class="container">
-			<h1>Leptoaster</h1>
+			<h1>"Leptoaster"</h1>
+			<h2>"v0.1.2"</h2>
 
 			<input type="text"
 				on:change=move |ev| {
@@ -64,7 +65,7 @@ pub fn ToastConfig() -> impl IntoView {
 				prop:disabled=expiry_disabled
 			/>
 
-			<label for="expiry-disabled">Disable expiry</label>
+			<label for="expiry-disabled">"Disable expiry"</label>
 
 			<input type="checkbox"
 				on:change=move |ev| {
@@ -74,7 +75,7 @@ pub fn ToastConfig() -> impl IntoView {
 				prop:value=expiry_disabled
 			/>
 
-			<label for="progress-disabled">Disable progress</label>
+			<label for="progress-disabled">"Disable progress"</label>
 
 			<input type="checkbox"
 				on:change=move |ev| {
