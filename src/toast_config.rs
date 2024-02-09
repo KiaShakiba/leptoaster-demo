@@ -17,8 +17,8 @@ pub fn ToastConfig() -> impl IntoView {
 	let (message, set_message) = create_signal(String::from("Toast message"));
 	let (expiry, set_expiry) = create_signal(2500);
 	let (dismissable, set_dismissable) = create_signal(true);
-	let (expiry_disabled, set_expiry_disabled) = create_signal(false);
-	let (progress_disabled, set_progress_disabled) = create_signal(false);
+	let (expiry_enabled, set_expiry_enabled) = create_signal(true);
+	let (progress_enabled, set_progress_enabled) = create_signal(true);
 	let (level, set_level) = create_signal(ToastLevel::Success);
 	let (position, set_position) = create_signal(ToastPosition::BottomLeft);
 
@@ -28,9 +28,9 @@ pub fn ToastConfig() -> impl IntoView {
 			message => message.to_owned(),
 		};
 
-		let expiry = match expiry_disabled() {
-			true => None,
-			false => Some(expiry()),
+		let expiry = match expiry_enabled() {
+			true => Some(expiry()),
+			false => None,
 		};
 
 		toaster.toast(
@@ -38,7 +38,7 @@ pub fn ToastConfig() -> impl IntoView {
 				.with_level(level())
 				.with_dismissable(dismissable())
 				.with_expiry(expiry)
-				.with_progress(!progress_disabled())
+				.with_progress(progress_enabled())
 				.with_position(position())
 		);
 	};
@@ -64,28 +64,28 @@ pub fn ToastConfig() -> impl IntoView {
 				}
 				prop:value=expiry
 				prop:placeholder="Expiry (ms)"
-				prop:disabled=expiry_disabled
+				prop:disabled=move || !expiry_enabled()
 			/>
 
-			<label for="expiry-disabled">"Disable expiry"</label>
+			<label for="expiry-enabled">"Expiry"</label>
 
 			<input type="checkbox"
 				on:change=move |ev| {
-					set_expiry_disabled(event_target_checked(&ev));
+					set_expiry_enabled(event_target_checked(&ev));
 				}
-				prop:id="expiry-disabled"
-				prop:checked=expiry_disabled
+				prop:id="expiry-enabled"
+				prop:checked=expiry_enabled
 			/>
 
-			<label for="progress-disabled">"Disable progress"</label>
+			<label for="progress-enabled">"Progress"</label>
 
 			<input type="checkbox"
 				on:change=move |ev| {
-					set_progress_disabled(event_target_checked(&ev));
+					set_progress_enabled(event_target_checked(&ev));
 				}
-				prop:id="progress-disabled"
-				prop:checked=progress_disabled
-				prop:disabled=expiry_disabled
+				prop:id="progress-enabled"
+				prop:checked=progress_enabled
+				prop:disabled=move || !expiry_enabled()
 			/>
 
 			<label for="dismissable">"Dismissable"</label>
