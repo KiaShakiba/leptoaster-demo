@@ -16,6 +16,7 @@ pub fn ToastConfig() -> impl IntoView {
 
 	let (message, set_message) = create_signal(String::from("Toast message"));
 	let (expiry, set_expiry) = create_signal(2500);
+	let (dismissable, set_dismissable) = create_signal(true);
 	let (expiry_disabled, set_expiry_disabled) = create_signal(false);
 	let (progress_disabled, set_progress_disabled) = create_signal(false);
 	let (level, set_level) = create_signal(ToastLevel::Success);
@@ -35,6 +36,7 @@ pub fn ToastConfig() -> impl IntoView {
 		toaster.toast(
 			ToastBuilder::new(&message)
 				.with_level(level())
+				.with_dismissable(dismissable())
 				.with_expiry(expiry)
 				.with_progress(!progress_disabled())
 				.with_position(position())
@@ -44,7 +46,7 @@ pub fn ToastConfig() -> impl IntoView {
 	view! {
 		<div class="container">
 			<h1>"Leptoaster"</h1>
-			<h2>"v0.1.4"</h2>
+			<h2>"v0.1.5"</h2>
 
 			<input type="text"
 				on:change=move |ev| {
@@ -72,7 +74,7 @@ pub fn ToastConfig() -> impl IntoView {
 					set_expiry_disabled(event_target_checked(&ev));
 				}
 				prop:id="expiry-disabled"
-				prop:value=expiry_disabled
+				prop:checked=expiry_disabled
 			/>
 
 			<label for="progress-disabled">"Disable progress"</label>
@@ -82,8 +84,18 @@ pub fn ToastConfig() -> impl IntoView {
 					set_progress_disabled(event_target_checked(&ev));
 				}
 				prop:id="progress-disabled"
-				prop:value=progress_disabled
+				prop:checked=progress_disabled
 				prop:disabled=expiry_disabled
+			/>
+
+			<label for="dismissable">"Dismissable"</label>
+
+			<input type="checkbox"
+				on:change=move |ev| {
+					set_dismissable(event_target_checked(&ev));
+				}
+				prop:id="dismissable"
+				prop:checked=dismissable
 			/>
 
 			<LevelSelect
