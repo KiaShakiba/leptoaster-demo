@@ -27,28 +27,28 @@ pub fn LevelSelect(
 		}>
 			<option
 				value="info"
-				selected=move || level() == ToastLevel::Info
+				prop:selected=move || level() == ToastLevel::Info
 			>
 				"Info"
 			</option>
 
 			<option
 				value="success"
-				selected=move || level() == ToastLevel::Success
+				prop:selected=move || level() == ToastLevel::Success
 			>
 				"Success"
 			</option>
 
 			<option
 				value="warn"
-				selected=move || level() == ToastLevel::Warn
+				prop:selected=move || level() == ToastLevel::Warn
 			>
 				"Warn"
 			</option>
 
 			<option
 				value="error"
-				selected=move || level() == ToastLevel::Error
+				prop:selected=move || level() == ToastLevel::Error
 			>
 				"Error"
 			</option>

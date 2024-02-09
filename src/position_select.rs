@@ -27,28 +27,28 @@ pub fn PositionSelect(
 		}>
 			<option
 				value="top_left"
-				selected=move || position() == ToastPosition::TopLeft
+				prop:selected=move || position() == ToastPosition::TopLeft
 			>
 				"Top left"
 			</option>
 
 			<option
 				value="top_right"
-				selected=move || position() == ToastPosition::TopRight
+				prop:selected=move || position() == ToastPosition::TopRight
 			>
 				"Top right"
 			</option>
 
 			<option
 				value="bottom_right"
-				selected=move || position() == ToastPosition::BottomRight
+				prop:selected=move || position() == ToastPosition::BottomRight
 			>
 				"Bottom right"
 			</option>
 
 			<option
 				value="bottom_left"
-				selected=move || position() == ToastPosition::BottomLeft
+				prop:selected=move || position() == ToastPosition::BottomLeft
 			>
 				"Bottom left"
 			</option>

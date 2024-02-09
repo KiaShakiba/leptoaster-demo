@@ -22,7 +22,7 @@ pub fn ToastConfig() -> impl IntoView {
 	let (level, set_level) = create_signal(ToastLevel::Success);
 	let (position, set_position) = create_signal(ToastPosition::BottomLeft);
 
-	let show_toast = move |()| {
+	let show_toast = move |_| {
 		let message = match message().as_str() {
 			"" => String::from("Toast message"),
 			message => message.to_owned(),
@@ -41,6 +41,16 @@ pub fn ToastConfig() -> impl IntoView {
 				.with_progress(progress_enabled())
 				.with_position(position())
 		);
+	};
+
+	let reset = move |_| {
+		set_message(String::from("Toast message"));
+		set_expiry(2500);
+		set_dismissable(true);
+		set_expiry_enabled(true);
+		set_progress_enabled(true);
+		set_level(ToastLevel::Success);
+		set_position(ToastPosition::BottomLeft);
 	};
 
 	view! {
@@ -109,10 +119,19 @@ pub fn ToastConfig() -> impl IntoView {
 			/>
 
 			<button
-				on:click=move |_| show_toast(())
+				class="submit"
+				on:click=show_toast
 				prop:disabled=move || message().is_empty()
 			>
 				"Toast"
+			</button>
+
+			<button
+				class="reset"
+				on:click=reset
+				prop:disabled=move || message().is_empty()
+			>
+				"Reset"
 			</button>
 		</div>
 	}
