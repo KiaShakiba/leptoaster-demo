@@ -95,6 +95,7 @@ select {
 
 button {
 	color: #ffffff;
+	margin-left: 8px;
 	padding: 12px 16px;
 	border-radius: 4px;
 	cursor: pointer;
@@ -123,7 +124,6 @@ button:disabled {
 }
 
 .reset {
-	margin-right: 8px;
 	background-color: #ff9800;
 }
 
@@ -137,4 +137,20 @@ button:disabled {
 
 .reset:disabled {
 	background-color: #ff9800 !important;
+}
+
+.clear {
+	background-color: #f44336;
+}
+
+.clear:hover {
+	background-color: #f77b72;
+}
+
+.clear:active {
+	background-color: #c6180b;
+}
+
+.clear:disabled {
+	background-color: #f44336 !important;
 }

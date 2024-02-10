@@ -21,6 +21,8 @@ fn main() {
 
 #[component]
 fn App() -> impl IntoView {
+	console_error_panic_hook::set_once();
+
 	provide_toaster();
 
 	view! {

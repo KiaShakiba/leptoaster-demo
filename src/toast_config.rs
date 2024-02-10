@@ -12,8 +12,6 @@ use crate::position_select::PositionSelect;
 
 #[component]
 pub fn ToastConfig() -> impl IntoView {
-	let toaster = expect_toaster();
-
 	let (message, set_message) = create_signal(String::from("Toast message"));
 	let (expiry, set_expiry) = create_signal(2500);
 	let (dismissable, set_dismissable) = create_signal(true);
@@ -33,7 +31,7 @@ pub fn ToastConfig() -> impl IntoView {
 			false => None,
 		};
 
-		toaster.toast(
+		expect_toaster().toast(
 			ToastBuilder::new(&message)
 				.with_level(level())
 				.with_dismissable(dismissable())
@@ -53,10 +51,14 @@ pub fn ToastConfig() -> impl IntoView {
 		set_position(ToastPosition::BottomLeft);
 	};
 
+	let clear = move |_| {
+		expect_toaster().clear();
+	};
+
 	view! {
 		<div class="container">
 			<h1>"Leptoaster"</h1>
-			<h2>"v0.1.5"</h2>
+			<h2>"v0.1.6"</h2>
 
 			<input type="text"
 				on:change=move |ev| {
@@ -132,6 +134,14 @@ pub fn ToastConfig() -> impl IntoView {
 				prop:disabled=move || message().is_empty()
 			>
 				"Reset"
+			</button>
+
+			<button
+				class="clear"
+				on:click=clear
+				prop:disabled=move || message().is_empty()
+			>
+				"Clear"
 			</button>
 		</div>
 	}
