@@ -79,36 +79,41 @@ pub fn ToastConfig() -> impl IntoView {
 				prop:disabled=move || !expiry_enabled()
 			/>
 
-			<label for="expiry-enabled">"Expiry"</label>
+			<div class="checkboxes">
+				<label>
+					<input type="checkbox"
+						on:change=move |ev| {
+							set_dismissable(event_target_checked(&ev));
+						}
+						prop:checked=dismissable
+					/>
 
-			<input type="checkbox"
-				on:change=move |ev| {
-					set_expiry_enabled(event_target_checked(&ev));
-				}
-				prop:id="expiry-enabled"
-				prop:checked=expiry_enabled
-			/>
+					"Dismissable"
+				</label>
 
-			<label for="progress-enabled">"Progress"</label>
+				<label>
+					<input type="checkbox"
+						on:change=move |ev| {
+							set_progress_enabled(event_target_checked(&ev));
+						}
+						prop:checked=progress_enabled
+						prop:disabled=move || !expiry_enabled()
+					/>
 
-			<input type="checkbox"
-				on:change=move |ev| {
-					set_progress_enabled(event_target_checked(&ev));
-				}
-				prop:id="progress-enabled"
-				prop:checked=progress_enabled
-				prop:disabled=move || !expiry_enabled()
-			/>
+					"Progress"
+				</label>
 
-			<label for="dismissable">"Dismissable"</label>
+				<label>
+					<input type="checkbox"
+						on:change=move |ev| {
+							set_expiry_enabled(event_target_checked(&ev));
+						}
+						prop:checked=expiry_enabled
+					/>
 
-			<input type="checkbox"
-				on:change=move |ev| {
-					set_dismissable(event_target_checked(&ev));
-				}
-				prop:id="dismissable"
-				prop:checked=dismissable
-			/>
+					"Expiry"
+				</label>
+			</div>
 
 			<LevelSelect
 				level=level
@@ -120,29 +125,31 @@ pub fn ToastConfig() -> impl IntoView {
 				set_position=set_position
 			/>
 
-			<button
-				class="submit"
-				on:click=show_toast
-				prop:disabled=move || message().is_empty()
-			>
-				"Toast"
-			</button>
+			<div class="buttons">
+				<button
+					class="clear"
+					on:click=clear
+					prop:disabled=move || message().is_empty()
+				>
+					"Clear"
+				</button>
 
-			<button
-				class="reset"
-				on:click=reset
-				prop:disabled=move || message().is_empty()
-			>
-				"Reset"
-			</button>
+				<button
+					class="reset"
+					on:click=reset
+					prop:disabled=move || message().is_empty()
+				>
+					"Reset"
+				</button>
 
-			<button
-				class="clear"
-				on:click=clear
-				prop:disabled=move || message().is_empty()
-			>
-				"Clear"
-			</button>
+				<button
+					class="submit"
+					on:click=show_toast
+					prop:disabled=move || message().is_empty()
+				>
+					"Toast"
+				</button>
+			</div>
 		</div>
 	}
 }
