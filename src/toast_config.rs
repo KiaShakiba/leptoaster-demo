@@ -19,6 +19,7 @@ pub fn ToastConfig() -> impl IntoView {
 	let (progress_enabled, set_progress_enabled) = create_signal(true);
 	let (level, set_level) = create_signal(ToastLevel::Success);
 	let (position, set_position) = create_signal(ToastPosition::BottomLeft);
+	let (stacked, set_stacked) = create_signal(false);
 
 	let show_toast = move |_| {
 		let message = match message().as_str() {
@@ -49,6 +50,7 @@ pub fn ToastConfig() -> impl IntoView {
 		set_progress_enabled(true);
 		set_level(ToastLevel::Success);
 		set_position(ToastPosition::BottomLeft);
+		set_stacked(false);
 	};
 
 	let clear = move |_| {
@@ -56,9 +58,11 @@ pub fn ToastConfig() -> impl IntoView {
 	};
 
 	view! {
+		<Toaster stacked />
+
 		<div class="container">
 			<h1>"Leptoaster"</h1>
-			<h2>"v0.1.6"</h2>
+			<h2>"v0.1.7"</h2>
 
 			<input type="text"
 				on:change=move |ev| {
@@ -124,6 +128,19 @@ pub fn ToastConfig() -> impl IntoView {
 				position=position
 				set_position=set_position
 			/>
+
+			<div class="checkboxes">
+				<label>
+					<input type="checkbox"
+						on:change=move |ev| {
+							set_stacked(event_target_checked(&ev));
+						}
+						prop:checked=stacked
+					/>
+
+					"Stacked"
+				</label>
+			</div>
 
 			<div class="buttons">
 				<button

@@ -26,7 +26,6 @@ fn App() -> impl IntoView {
 	provide_toaster();
 
 	view! {
-		<Toaster />
 		<ToastConfig />
 	}
 }

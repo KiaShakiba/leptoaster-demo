@@ -42,8 +42,9 @@ h2 {
 }
 
 .checkboxes {
+	width: 100%;
 	margin-top: 8px;
-	float: right;
+	text-align: right;
 }
 
 .buttons {
