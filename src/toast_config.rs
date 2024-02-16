@@ -62,7 +62,7 @@ pub fn ToastConfig() -> impl IntoView {
 
 		<div class="container">
 			<h1>"Leptoaster"</h1>
-			<h2>"v0.1.7"</h2>
+			<h2>"v0.1.8"</h2>
 
 			<input type="text"
 				on:change=move |ev| {
