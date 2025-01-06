@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-use leptos::*;
+use leptos::prelude::*;
 use leptoaster::*;
 
 #[component]
@@ -23,32 +23,32 @@ pub fn LevelSelect(
 				_ => unreachable!(),
 			};
 
-			set_level(new_value);
+			set_level.set(new_value);
 		}>
 			<option
 				value="info"
-				prop:selected=move || level() == ToastLevel::Info
+				prop:selected=move || level.get() == ToastLevel::Info
 			>
 				"Info"
 			</option>
 
 			<option
 				value="success"
-				prop:selected=move || level() == ToastLevel::Success
+				prop:selected=move || level.get() == ToastLevel::Success
 			>
 				"Success"
 			</option>
 
 			<option
 				value="warn"
-				prop:selected=move || level() == ToastLevel::Warn
+				prop:selected=move || level.get() == ToastLevel::Warn
 			>
 				"Warn"
 			</option>
 
 			<option
 				value="error"
-				prop:selected=move || level() == ToastLevel::Error
+				prop:selected=move || level.get() == ToastLevel::Error
 			>
 				"Error"
 			</option>

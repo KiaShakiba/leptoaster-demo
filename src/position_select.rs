@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-use leptos::*;
+use leptos::prelude::*;
 use leptoaster::*;
 
 #[component]
@@ -23,32 +23,32 @@ pub fn PositionSelect(
 				_ => unreachable!(),
 			};
 
-			set_position(new_value);
+			set_position.set(new_value);
 		}>
 			<option
 				value="top_left"
-				prop:selected=move || position() == ToastPosition::TopLeft
+				prop:selected=move || position.get() == ToastPosition::TopLeft
 			>
 				"Top left"
 			</option>
 
 			<option
 				value="top_right"
-				prop:selected=move || position() == ToastPosition::TopRight
+				prop:selected=move || position.get() == ToastPosition::TopRight
 			>
 				"Top right"
 			</option>
 
 			<option
 				value="bottom_right"
-				prop:selected=move || position() == ToastPosition::BottomRight
+				prop:selected=move || position.get() == ToastPosition::BottomRight
 			>
 				"Bottom right"
 			</option>
 
 			<option
 				value="bottom_left"
-				prop:selected=move || position() == ToastPosition::BottomLeft
+				prop:selected=move || position.get() == ToastPosition::BottomLeft
 			>
 				"Bottom left"
 			</option>

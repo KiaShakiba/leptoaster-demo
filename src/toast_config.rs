@@ -5,52 +5,54 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-use leptos::*;
+use leptos::prelude::*;
 use leptoaster::*;
 use crate::level_select::LevelSelect;
 use crate::position_select::PositionSelect;
 
 #[component]
 pub fn ToastConfig() -> impl IntoView {
-	let (message, set_message) = create_signal(String::from("Toast message"));
-	let (expiry, set_expiry) = create_signal(2500);
-	let (dismissable, set_dismissable) = create_signal(true);
-	let (expiry_enabled, set_expiry_enabled) = create_signal(true);
-	let (progress_enabled, set_progress_enabled) = create_signal(true);
-	let (level, set_level) = create_signal(ToastLevel::Success);
-	let (position, set_position) = create_signal(ToastPosition::BottomLeft);
-	let (stacked, set_stacked) = create_signal(false);
+	let (message, set_message) = signal(String::from("Toast message"));
+	let (expiry, set_expiry) = signal(2500);
+	let (dismissable, set_dismissable) = signal(true);
+	let (expiry_enabled, set_expiry_enabled) = signal(true);
+	let (progress_enabled, set_progress_enabled) = signal(true);
+	let (level, set_level) = signal(ToastLevel::Success);
+	let (position, set_position) = signal(ToastPosition::BottomLeft);
+	let (stacked, set_stacked) = signal(false);
 
 	let show_toast = move |_| {
-		let message = match message().as_str() {
+		let message = match message.get().as_str() {
 			"" => String::from("Toast message"),
 			message => message.to_owned(),
 		};
 
-		let expiry = match expiry_enabled() {
-			true => Some(expiry()),
+		let expiry = match expiry_enabled.get() {
+			true => Some(expiry.get()),
 			false => None,
 		};
 
-		expect_toaster().toast(
+		let toaster = expect_toaster();
+
+		toaster.toast(
 			ToastBuilder::new(&message)
-				.with_level(level())
-				.with_dismissable(dismissable())
+				.with_level(level.get())
+				.with_dismissable(dismissable.get())
 				.with_expiry(expiry)
-				.with_progress(progress_enabled())
-				.with_position(position())
+				.with_progress(progress_enabled.get())
+				.with_position(position.get())
 		);
 	};
 
 	let reset = move |_| {
-		set_message(String::from("Toast message"));
-		set_expiry(2500);
-		set_dismissable(true);
-		set_expiry_enabled(true);
-		set_progress_enabled(true);
-		set_level(ToastLevel::Success);
-		set_position(ToastPosition::BottomLeft);
-		set_stacked(false);
+		set_message.set(String::from("Toast message"));
+		set_expiry.set(2500);
+		set_dismissable.set(true);
+		set_expiry_enabled.set(true);
+		set_progress_enabled.set(true);
+		set_level.set(ToastLevel::Success);
+		set_position.set(ToastPosition::BottomLeft);
+		set_stacked.set(false);
 	};
 
 	let clear = move |_| {
@@ -62,11 +64,11 @@ pub fn ToastConfig() -> impl IntoView {
 
 		<div class="container">
 			<h1>"Leptoaster"</h1>
-			<h2>"v0.1.8"</h2>
+			<h2>"v0.2.0"</h2>
 
 			<input type="text"
 				on:change=move |ev| {
-					set_message(event_target_value(&ev));
+					set_message.set(event_target_value(&ev));
 				}
 				prop:value=message
 				prop:placeholder="Toast message"
@@ -75,19 +77,19 @@ pub fn ToastConfig() -> impl IntoView {
 			<input type="number"
 				on:change=move |ev| {
 					if let Ok(value) = event_target_value(&ev).parse::<u32>() {
-						set_expiry(value);
+						set_expiry.set(value);
 					}
 				}
 				prop:value=expiry
 				prop:placeholder="Expiry (ms)"
-				prop:disabled=move || !expiry_enabled()
+				prop:disabled=move || !expiry_enabled.get()
 			/>
 
 			<div class="checkboxes">
 				<label>
 					<input type="checkbox"
 						on:change=move |ev| {
-							set_dismissable(event_target_checked(&ev));
+							set_dismissable.set(event_target_checked(&ev));
 						}
 						prop:checked=dismissable
 					/>
@@ -98,10 +100,10 @@ pub fn ToastConfig() -> impl IntoView {
 				<label>
 					<input type="checkbox"
 						on:change=move |ev| {
-							set_progress_enabled(event_target_checked(&ev));
+							set_progress_enabled.set(event_target_checked(&ev));
 						}
 						prop:checked=progress_enabled
-						prop:disabled=move || !expiry_enabled()
+						prop:disabled=move || !expiry_enabled.get()
 					/>
 
 					"Progress"
@@ -110,7 +112,7 @@ pub fn ToastConfig() -> impl IntoView {
 				<label>
 					<input type="checkbox"
 						on:change=move |ev| {
-							set_expiry_enabled(event_target_checked(&ev));
+							set_expiry_enabled.set(event_target_checked(&ev));
 						}
 						prop:checked=expiry_enabled
 					/>
@@ -133,7 +135,7 @@ pub fn ToastConfig() -> impl IntoView {
 				<label>
 					<input type="checkbox"
 						on:change=move |ev| {
-							set_stacked(event_target_checked(&ev));
+							set_stacked.set(event_target_checked(&ev));
 						}
 						prop:checked=stacked
 					/>
@@ -146,7 +148,7 @@ pub fn ToastConfig() -> impl IntoView {
 				<button
 					class="clear"
 					on:click=clear
-					prop:disabled=move || message().is_empty()
+					prop:disabled=move || message.get().is_empty()
 				>
 					"Clear"
 				</button>
@@ -154,7 +156,7 @@ pub fn ToastConfig() -> impl IntoView {
 				<button
 					class="reset"
 					on:click=reset
-					prop:disabled=move || message().is_empty()
+					prop:disabled=move || message.get().is_empty()
 				>
 					"Reset"
 				</button>
@@ -162,7 +164,7 @@ pub fn ToastConfig() -> impl IntoView {
 				<button
 					class="submit"
 					on:click=show_toast
-					prop:disabled=move || message().is_empty()
+					prop:disabled=move || message.get().is_empty()
 				>
 					"Toast"
 				</button>

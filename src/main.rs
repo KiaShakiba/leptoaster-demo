@@ -9,7 +9,7 @@ mod toast_config;
 mod level_select;
 mod position_select;
 
-use leptos::*;
+use leptos::prelude::*;
 use leptoaster::*;
 use crate::toast_config::ToastConfig;
 
@@ -22,7 +22,6 @@ fn main() {
 #[component]
 fn App() -> impl IntoView {
 	console_error_panic_hook::set_once();
-
 	provide_toaster();
 
 	view! {
