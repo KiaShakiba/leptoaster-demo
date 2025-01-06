@@ -21,6 +21,7 @@ pub fn ToastConfig() -> impl IntoView {
 	let (position, set_position) = signal(ToastPosition::BottomLeft);
 	let (stacked, set_stacked) = signal(false);
 
+	let toaster = expect_toaster();
 	let show_toast = move |_| {
 		let message = match message.get().as_str() {
 			"" => String::from("Toast message"),
@@ -32,10 +33,8 @@ pub fn ToastConfig() -> impl IntoView {
 			false => None,
 		};
 
-		let toaster = expect_toaster();
-
 		toaster.toast(
-			ToastBuilder::new(&message)
+			ToastBuilder::new(message)
 				.with_level(level.get())
 				.with_dismissable(dismissable.get())
 				.with_expiry(expiry)
@@ -55,8 +54,9 @@ pub fn ToastConfig() -> impl IntoView {
 		set_stacked.set(false);
 	};
 
+	let toaster = expect_toaster();
 	let clear = move |_| {
-		expect_toaster().clear();
+		toaster.clear();
 	};
 
 	view! {
@@ -64,7 +64,7 @@ pub fn ToastConfig() -> impl IntoView {
 
 		<div class="container">
 			<h1>"Leptoaster"</h1>
-			<h2>"v0.2.0"</h2>
+			<h2>"v0.2.1"</h2>
 
 			<input type="text"
 				on:change=move |ev| {

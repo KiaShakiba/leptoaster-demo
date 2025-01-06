@@ -5,7 +5,5 @@ edition = "2021"
 
 [dependencies]
 leptos = { version = "0.7.3", features = ["csr"] }
-# leptoaster = { version = "0.1.8" }
-# temporary for testing
-leptoaster = { git = "https://github.com/KiaShakiba/leptoaster.git", tag = "v0.2.0", features = ["csr"] }
+leptoaster = { version = "0.2.1", features = ["csr"] }
 console_error_panic_hook = "0.1.7"
