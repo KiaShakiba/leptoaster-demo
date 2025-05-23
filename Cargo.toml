@@ -4,6 +4,6 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-leptos = { version = "0.7.8", features = ["csr"] }
-leptoaster = { version = "0.2.2", features = ["csr"] }
+leptos = { version = "0.8.2", features = ["csr"] }
+leptoaster = { version = "0.2.3", features = ["csr"] }
 console_error_panic_hook = "0.1.7"
